@@ -1,6 +1,5 @@
 {
   "name": "@hoory/chat-intergrations",
-  "private": false,
   "version": "1.0.0",
   "description": "Hoory custom chat integrations",
   "main": "./lib/cjs/index.js",
@@ -14,7 +13,8 @@
     "prebuild": "yarn clean",
     "build": "rollup -c",
     "clean": "rimraf lib my-react-package-*.tgz",
-    "watch": "rollup -cw"
+    "watch": "rollup -cw",
+    "publish": "npm publish --access=public"
   },
   "keywords": [],
   "license": "MIT",
