@@ -1,4 +1,4 @@
-export type User  = {
+export type User = {
   id: string,
   firstName: string,
   lastName: string,
@@ -24,22 +24,22 @@ export type User  = {
 };
 
 export enum RasaMessageType {
-  ANSWER = "ANSWER",
-  FORM = "FORM",
-  BUTTON = "BUTTON",
-  DELAY = "DELAY",
-  FORM_CS = "FORM_CS",
+  ANSWER = 'ANSWER',
+  FORM = 'FORM',
+  BUTTON = 'BUTTON',
+  DELAY = 'DELAY',
+  FORM_CS = 'FORM_CS',
 }
 
 enum ButtonType {
-  ConnectToSupport = "CONNECT_TO_SUPPORT",
-  Url = "URL",
+  ConnectToSupport = 'CONNECT_TO_SUPPORT',
+  Url = 'URL',
 }
 
 export const RasaOptionsValues = {
-  [ButtonType.Url]: "",
-  [ButtonType.ConnectToSupport]: "/trigger_handoff",
-};
+  [ButtonType.Url]: '',
+  [ButtonType.ConnectToSupport]: '/trigger_handoff'
+}
 
 export type RasaOptions = {
   title: string;
@@ -48,8 +48,8 @@ export type RasaOptions = {
 };
 
 enum AttachmentType {
-  PUBLIC = "PUBLIC",
-  PRIVATE = "PRIVATE",
+  PUBLIC = 'PUBLIC',
+  PRIVATE = 'PRIVATE',
 }
 
 type Attachment = {
@@ -62,7 +62,7 @@ type fieldMetadataType = {
 };
 
 export type RasaFieldType = {
-  type: Record<string, string>;
+  type: string;
   question: string;
   placeholder?: string;
   fieldMetadata: fieldMetadataType;

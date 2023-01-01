@@ -1,5 +1,5 @@
-import { createContext, useContext } from "react";
-import {User, RasaSockedMessage, MessageResponse, RasaFieldType, RasaMessageType} from "../constants/GeneralTypes";
+import { createContext, useContext } from 'react'
+import { User, RasaSockedMessage, MessageResponse, RasaFieldType, RasaMessageType } from '../constants/GeneralTypes'
 
 export type ContextType = {
   isInWidget?: boolean;
@@ -44,7 +44,7 @@ export type ContextType = {
   messageType: RasaMessageType;
 };
 
-export const RasaMessageContext = createContext<ContextType>({
+export const MessageContext = createContext<ContextType>({
   isInWidget: true,
   isLastMessage: true,
   isDarkTheme: true,
@@ -53,15 +53,15 @@ export const RasaMessageContext = createContext<ContextType>({
   message: {} as RasaSockedMessage,
   field: {} as RasaFieldType,
   messageType: RasaMessageType.ANSWER,
-  color: "",
-  createdAt: "",
-  avatar: "",
-  name: "",
-  workspaceId: "",
-  sendMessageHandler: (_) => undefined,
-});
+  color: '',
+  createdAt: '',
+  avatar: '',
+  name: '',
+  workspaceId: '',
+  sendMessageHandler: (_) => undefined
+})
 
-export const { Provider } = RasaMessageContext;
-export const useRasaMessageContext = () => {
-  return useContext(RasaMessageContext);
-};
+export const { Provider } = MessageContext
+export const useMessageContext = () => {
+  return useContext(MessageContext)
+}

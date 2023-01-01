@@ -1,13 +1,13 @@
-import styled from 'styled-components';
-import { IFPTT } from '@hoory/helpers/frontend';
-import { Skeleton } from 'antd';
+import styled from 'styled-components'
+import { ifProp } from 'styled-components-helpers'
+import { Skeleton } from 'antd'
 
 export const StyledClickBlocker = styled.div`
   width: 100%;
   height: 100%;
   position: absolute;
   top: 0;
-`;
+`
 
 export const StyledWidgetWrapper = styled.div<{ $isDisabled?: boolean; $isInWidget?: boolean }>`
   width: calc(100% + 24px);
@@ -17,7 +17,7 @@ export const StyledWidgetWrapper = styled.div<{ $isDisabled?: boolean; $isInWidg
     Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
     'Noto Color Emoji' !important;
 
-  ${IFPTT(
+  ${ifProp(
     '$isInWidget',
     `
     margin-right: auto;
@@ -27,7 +27,7 @@ export const StyledWidgetWrapper = styled.div<{ $isDisabled?: boolean; $isInWidg
     `
   )}
 
-  ${IFPTT(
+  ${ifProp(
     '$isDisabled',
     `
     -webkit-filter: grayscale(100%);
@@ -39,9 +39,9 @@ export const StyledWidgetWrapper = styled.div<{ $isDisabled?: boolean; $isInWidg
   .market-collapse > div:nth-child(2) {
     display: none;
   }
-`;
+`
 
 export const StyledLoadingSkeleton = styled(Skeleton)`
   height: 200px;
   width: 100%;
-`;
+`

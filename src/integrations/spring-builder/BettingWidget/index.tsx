@@ -1,11 +1,11 @@
-import React, { useEffect } from "react";
-import { v4 as uuid } from "uuid";
-import { FILES_PATH } from "./constants";
+import React, { useEffect, useState } from 'react'
+import { v4 as uuid } from 'uuid'
+import { FILES_PATH } from './constants'
 import {
   StyledWidgetWrapper,
   StyledClickBlocker,
-  StyledLoadingSkeleton,
-} from "./styles";
+  StyledLoadingSkeleton
+} from './styles'
 
 export type SelectCallback = {
   chosenId: number;
@@ -25,7 +25,7 @@ export type SelectCallback = {
   eventName?: string;
   marketId?: number;
   eventId?: number;
-  status?: "success" | "error" | "unauthorized" | "cancel";
+  status?: 'success' | 'error' | 'unauthorized' | 'cancel';
   auth_token?: string;
   email?: string;
   first_name?: string;
@@ -61,53 +61,52 @@ export type WidgetConfig = {
 type Props = {
   widgetType?: string;
   onSelect: (data: SelectCallback) => void;
-  isBettingScriptsLoaded: boolean;
   isDisabled?: boolean;
   isInWidget?: boolean;
-  setBettingScriptsLoaded: (state: boolean) => void;
   widgetConfig?: WidgetConfig;
 };
 
-function BettingWidget({
+function BettingWidget ({
   widgetType,
   onSelect,
   widgetConfig,
-  isBettingScriptsLoaded,
-  setBettingScriptsLoaded,
   isDisabled,
-  isInWidget,
+  isInWidget
 }: Props) {
-  const tempConfig: WidgetConfig = { ...widgetConfig };
+  const isBettingScriptsLoaded = localStorage.getItem('isBettingScriptsLoaded') || ''
+  const [isLoaded, setIsLoaded] = useState(!!isBettingScriptsLoaded)
+  const tempConfig: WidgetConfig = { ...widgetConfig }
   if (onSelect) {
     const callbackFnName = `hoorySuccessCallback_${uuid()}`;
-    (window as any)[callbackFnName] = onSelect;
-    tempConfig.hasCallback = true;
-    tempConfig.callbackName = callbackFnName;
+    (window as any)[callbackFnName] = onSelect
+    tempConfig.hasCallback = true
+    tempConfig.callbackName = callbackFnName
   }
 
   useEffect(() => {
-    if (!isBettingScriptsLoaded) {
-      const mainScript = document.createElement("script");
-      const runTimeScript = document.createElement("script");
-      const styledRef = document.createElement("link");
-      const key = uuid();
-      mainScript.src = `${FILES_PATH}/js/main.chunk.js?key=${key}`;
-      runTimeScript.src = `${FILES_PATH}/js/runtime-main.js?key=${key}`;
-      styledRef.href = `${FILES_PATH}/css/main.chunk.css?key=${key}`;
-      styledRef.rel = `stylesheet`;
-      styledRef.type = `text/css`;
-      document.body.appendChild(mainScript);
-      document.body.appendChild(runTimeScript);
-      document.body.appendChild(styledRef);
+    if (!isLoaded) {
+      const mainScript = document.createElement('script')
+      const runTimeScript = document.createElement('script')
+      const styledRef = document.createElement('link')
+      const key = uuid()
+      mainScript.src = `${FILES_PATH}/js/main.chunk.js?key=${key}`
+      runTimeScript.src = `${FILES_PATH}/js/runtime-main.js?key=${key}`
+      styledRef.href = `${FILES_PATH}/css/main.chunk.css?key=${key}`
+      styledRef.rel = 'stylesheet'
+      styledRef.type = 'text/css'
+      document.body.appendChild(mainScript)
+      document.body.appendChild(runTimeScript)
+      document.body.appendChild(styledRef)
 
       mainScript.onload = function () {
-        setBettingScriptsLoaded(true);
-        (window as any).initHooryWidgets();
-      };
+        localStorage.setItem('isBettingScriptsLoaded', '1')
+        setIsLoaded(true);
+        (window as any).initHooryWidgets()
+      }
     } else {
-      (window as any).initHooryWidgets();
+      (window as any).initHooryWidgets()
     }
-  }, []);
+  }, [])
 
   return (
     <StyledWidgetWrapper $isDisabled={isDisabled} $isInWidget={isInWidget}>
@@ -117,9 +116,9 @@ function BettingWidget({
         data-loaded="false"
       />
       {isDisabled && <StyledClickBlocker />}
-      {!isBettingScriptsLoaded && <StyledLoadingSkeleton />}
+      {!isLoaded && <StyledLoadingSkeleton />}
     </StyledWidgetWrapper>
-  );
+  )
 }
 
-export default BettingWidget;
+export default BettingWidget
