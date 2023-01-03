@@ -1,6 +1,6 @@
 {
   "name": "@hoory/chat-intergrations",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "Hoory custom chat integrations",
   "main": "./lib/cjs/index.js",
   "module": "./lib/esm/index.js",

@@ -1,6 +1,5 @@
 import React, { lazy, useMemo } from 'react'
-import { Provider as MessageProvider } from './contexts'
-import { MessageResponse, RasaFieldType, RasaMessageType, RasaSockedMessage, User } from './constants/GeneralTypes'
+import { ContextType, Provider as MessageProvider } from './contexts'
 
 /**
  * Ucraft
@@ -20,11 +19,24 @@ import { MessageResponse, RasaFieldType, RasaMessageType, RasaSockedMessage, Use
  */
 const SpringBuilderComponentsSwitcher = lazy(() => import('./integrations/spring-builder'))
 
-type Props = {
-  field: Record<any, any>
-};
+interface Props extends ContextType {}
 
-export function CustomFieldRenderer ({ field }: Props) {
+export function CustomFieldRenderer ({
+  field,
+  isInWidget,
+  isLastMessage,
+  isDarkTheme,
+  prevMessage,
+  createdBy,
+  message,
+  messageType,
+  color,
+  createdAt,
+  avatar,
+  name,
+  workspaceId,
+  sendMessageHandler
+}: Props) {
   const Component = useMemo(() => {
     switch (field.type) {
       /**
@@ -64,25 +76,25 @@ export function CustomFieldRenderer ({ field }: Props) {
       case 'SHOW_BALANCE':
         return <SpringBuilderComponentsSwitcher />
       default:
-        return <div>This form type is not implemented</div>
+        return <div>This form type is not implemented yet! Please add your custom components on <a href="https://github.com/hoory-com/chat-integrations" target="_blank" rel="noreferrer">our public integrations repository</a>.</div>
     }
   }, [field.type])
 
   return <MessageProvider value={{
-    isInWidget: true,
-    isLastMessage: true,
-    isDarkTheme: true,
-    prevMessage: {} as MessageResponse,
-    createdBy: {} as User,
-    message: {} as RasaSockedMessage,
-    field: {} as RasaFieldType,
-    messageType: RasaMessageType.ANSWER,
-    color: '',
-    createdAt: '',
-    avatar: '',
-    name: '',
-    workspaceId: '',
-    sendMessageHandler: (_) => undefined
+    isInWidget,
+    isLastMessage,
+    isDarkTheme,
+    prevMessage,
+    createdBy,
+    message,
+    field,
+    messageType,
+    color,
+    createdAt,
+    avatar,
+    name,
+    workspaceId,
+    sendMessageHandler
   }}>
   {Component}
   </MessageProvider>

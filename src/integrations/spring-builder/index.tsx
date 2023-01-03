@@ -40,9 +40,9 @@ function BetFlowMessage () {
 
   let widgetType = 'GameList'
   switch (field?.type) {
-    case 'ask_sport':
-    case 'ask_game':
-    case 'ask_competition':
+    case 'ASK_SPORT':
+    case 'ASK_GAME':
+    case 'ASK_COMPETITION':
       if (messageData.competitionId) {
         widgetType = 'HooryGameList'
         tempWidgetConfig.competitionIds = messageData.competitionId
@@ -51,16 +51,16 @@ function BetFlowMessage () {
         tempWidgetConfig.initialValue = messageData.teamName
       }
       break
-    case 'ask_market':
-    case 'ask_market_group':
-    case 'ask_market_name':
+    case 'ASK_MARKET':
+    case 'ASK_MARKET_GROUP':
+    case 'ASK_MARKET_NAME':
       widgetType = 'HoorySingleGame'
       tempWidgetConfig.sport = messageData.sportAlias
       tempWidgetConfig.region = messageData.gameRegion
       tempWidgetConfig.competition = messageData.competitionId
       tempWidgetConfig.game = messageData.gameId
       break
-    case 'ask_confirm_details':
+    case 'ASK_CONFIRM_DETAILS':
       widgetType = 'HooryBetslip'
       tempWidgetConfig.initialAmount = parseInt(
         (messageData.amount || '').replace(/[^0-9]/g, ''),
@@ -72,10 +72,10 @@ function BetFlowMessage () {
       tempWidgetConfig.competitionId = parseInt(messageData.competitionId, 10)
 
       break
-    case 'ask_login':
+    case 'ASK_LOGIN':
       widgetType = 'HooryAccount'
       break
-    case 'show_balance':
+    case 'SHOW_BALANCE':
       widgetType = 'HooryBalance'
       break
   }
