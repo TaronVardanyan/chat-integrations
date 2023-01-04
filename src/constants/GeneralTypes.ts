@@ -102,7 +102,7 @@ export type MessageResponse = {
   body: string,
   createdAt: string,
   createdBy?: User,
-  notificationType: string,
+  notificationType: any,
   paramsList: Array<string>,
   actions: string,
   conversationId: string,

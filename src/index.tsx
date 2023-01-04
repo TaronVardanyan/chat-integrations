@@ -1,4 +1,4 @@
-import React, { lazy, useMemo } from 'react'
+import React, { lazy, useMemo, memo } from 'react'
 import { ContextType, Provider as MessageProvider } from './contexts'
 
 /**
@@ -21,24 +21,9 @@ const SpringBuilderComponentsSwitcher = lazy(() => import('./integrations/spring
 
 interface Props extends ContextType {}
 
-export function CustomFieldRenderer ({
-  field,
-  isInWidget,
-  isLastMessage,
-  isDarkTheme,
-  prevMessage,
-  createdBy,
-  message,
-  messageType,
-  color,
-  createdAt,
-  avatar,
-  name,
-  workspaceId,
-  sendMessageHandler
-}: Props) {
+function IntegrationWrapper (props: Props) {
   const Component = useMemo(() => {
-    switch (field.type) {
+    switch (props.field.type) {
       /**
        * Ucraft
        */
@@ -78,24 +63,11 @@ export function CustomFieldRenderer ({
       default:
         return <div>This form type is not implemented yet! Please add your custom components on <a href="https://github.com/hoory-com/chat-integrations" target="_blank" rel="noreferrer">our public integrations repository</a>.</div>
     }
-  }, [field.type])
+  }, [props.field.type])
 
-  return <MessageProvider value={{
-    isInWidget,
-    isLastMessage,
-    isDarkTheme,
-    prevMessage,
-    createdBy,
-    message,
-    field,
-    messageType,
-    color,
-    createdAt,
-    avatar,
-    name,
-    workspaceId,
-    sendMessageHandler
-  }}>
+  return <MessageProvider value={props}>
   {Component}
   </MessageProvider>
 }
+
+export const CustomFieldRenderer = memo(IntegrationWrapper)

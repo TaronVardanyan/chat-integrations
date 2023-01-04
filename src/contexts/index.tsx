@@ -6,6 +6,8 @@ export type ContextType = {
   prevMessage: MessageResponse;
   createdBy: User;
   message: RasaSockedMessage;
+  isRead?: boolean;
+  isSent?: boolean;
   isInIframe?: boolean;
   isLastMessage: boolean;
   isDarkTheme?: boolean;
@@ -42,12 +44,15 @@ export type ContextType = {
   ) => void;
   field: RasaFieldType;
   messageType: RasaMessageType;
+  changeFooterVisibility?: (state: boolean) => undefined;
 };
 
 export const MessageContext = createContext<ContextType>({
   isInWidget: true,
   isLastMessage: true,
   isDarkTheme: true,
+  isSent: false,
+  isRead: false,
   prevMessage: {} as MessageResponse,
   createdBy: {} as User,
   message: {} as RasaSockedMessage,
@@ -58,7 +63,8 @@ export const MessageContext = createContext<ContextType>({
   avatar: '',
   name: '',
   workspaceId: '',
-  sendMessageHandler: (_) => undefined
+  sendMessageHandler: () => undefined,
+  changeFooterVisibility: () => undefined
 })
 
 export const { Provider } = MessageContext
