@@ -1,40 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import { v4 as uuid } from 'uuid'
 import { FILES_PATH } from './constants'
+import { MarketStepData, TeamStepData } from '../types'
 import {
   StyledWidgetWrapper,
   StyledClickBlocker,
   StyledLoadingSkeleton
 } from './styles'
 
-export type SelectCallback = {
-  chosenId: number;
-  chosenText: string;
-  action?: string;
-  sportType?: string;
-  sportTypeAlias?: string;
-  region?: string;
-  competitionName?: string;
-  name?: string;
-  gameDate?: number;
-  gameId?: number;
-  competitionId?: number;
-  marketGroupId?: string;
-  marketGroupName?: string;
-  marketName?: string;
-  eventName?: string;
-  marketId?: number;
-  eventId?: number;
-  status?: 'success' | 'error' | 'unauthorized' | 'cancel';
-  auth_token?: string;
-  email?: string;
-  first_name?: string;
-  last_name?: string;
-  user_id?: string;
-  username?: string;
-  coeficient?: string;
-  message?: string;
-};
+export type SelectCallback = TeamStepData | MarketStepData;
+
 export type WidgetConfig = {
   categoryIds?: string;
   competitionIds?: string;

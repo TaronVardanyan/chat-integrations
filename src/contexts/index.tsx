@@ -44,7 +44,7 @@ export type ContextType = {
   ) => void;
   field: RasaFieldType;
   messageType: RasaMessageType;
-  changeFooterVisibility?: (state: boolean) => undefined;
+  changeFooterVisibility?: (state: boolean) => void;
 };
 
 export const MessageContext = createContext<ContextType>({

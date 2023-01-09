@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en-us" data-theme="v3-light">
+<head>
+	<title>Hoory Widgets</title>
+	<link href="https://static.springbuilder.site/widgets-x/static/css/main.chunk.css" rel="stylesheet" type="text/css">
+	<script src="https://static.springbuilder.site/widgets-x/static/js/main.chunk.js"></script>
+	<script src="https://static.springbuilder.site/widgets-x/static/js/runtime-main.js"></script>
+</head>
+<body>
+	<h1>Step2: Competition</h1>
+	<div data-widget="HoorySearch"
+     data-configs='{"initialValue": "Arsenal","hasCallback": true,"callbackName": "hoorySuccessCallback"}'
+     data-loaded="false"></div>
+	<hr />
+
+<!--	<h1>Step3: Market</h1>-->
+<!--	<div data-widget="HoorySingleGame"-->
+<!--     data-configs='{"initialValue": "Arsenal","hasCallback": true,"callbackName": "hoorySuccessCallback"}'-->
+<!--     data-loaded="false"></div>-->
+<!--	<hr />-->
+
+	<h1>Step8: Login form</h1>
+	<div data-widget="HooryAccounts" data-loaded="false" data-configs='{"openLogin":true}'></div>
+
+
+	<script>
+		var hoorySuccessCallback =  (params)=>{
+			console.log(params)
+		}
+		window.initHooryWidgets();
+    </script>
+</body>
+</html>
