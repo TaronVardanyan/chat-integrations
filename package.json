@@ -1,6 +1,6 @@
 {
   "name": "@hoory/chat-intergrations",
-  "version": "1.0.13",
+  "version": "1.0.14",
   "private": false,
   "description": "Hoory custom chat integrations",
   "main": "./lib/cjs/index.js",
