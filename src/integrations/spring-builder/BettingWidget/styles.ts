@@ -10,13 +10,17 @@ export const StyledClickBlocker = styled.div`
 `
 
 export const StyledWidgetWrapper = styled.div<{ $isDisabled?: boolean; $isInWidget?: boolean }>`
-  width: calc(100% + 24px);
-  margin: 0 -12px 18px -12px;
-  max-width: 575px;
+  width: calc(100vw - 99px);
   font-family: geomanist, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue',
     Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
     'Noto Color Emoji' !important;
 
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+  bottom: -5px;
+  margin-top: 8px;
+  
   ${ifProp(
     '$isInWidget',
     `
@@ -36,6 +40,10 @@ export const StyledWidgetWrapper = styled.div<{ $isDisabled?: boolean; $isInWidg
     `
   )}
   
+  // Custom specific style to overwrite SP widget
+  .searchBar-wrapper--result {
+    border-radius: 9px;
+  }
   .market-collapse > div:nth-child(2) {
     display: none;
   }

@@ -17,7 +17,9 @@ function BetFlowMessage () {
 
   const { t } = useTranslation('ui')
   const messageData = useFormSlots() as BetFlowData
-  console.log('========form fields', message.form?.fields, 'messageData:::', messageData)
+  console.log('========form fields', message.form?.fields, 'messageData:::', messageData, {
+    isLastMessage
+  })
 
   const tempWidgetConfig: WidgetConfig = {}
 
@@ -29,7 +31,7 @@ function BetFlowMessage () {
         tempWidgetConfig.competitionIds = messageData.competitionId
       } else {
         widgetType = 'HoorySearch'
-        tempWidgetConfig.initialValue = messageData.teamName
+        tempWidgetConfig.initialValue = messageData.team_name
       }
       break
     case 'MARKET':
@@ -37,7 +39,7 @@ function BetFlowMessage () {
       tempWidgetConfig.sport = messageData.competition.sportTypeAlias
       tempWidgetConfig.region = messageData.competition.region
       tempWidgetConfig.competition = messageData.competition.competitionId + ''
-      tempWidgetConfig.game = messageData.competition.name
+      tempWidgetConfig.game = messageData.competition.gameId + ''
       break
     case 'CONFIRM_DETAILS':
       widgetType = 'HooryBetslip'
@@ -136,21 +138,19 @@ function BetFlowMessage () {
     // });
 
     // eslint-disable-next-line no-console
-    console.log('Widget optionData::::', optionData, '... We sent:', messageToSend, metadata)
+    console.log('Widget optionData::::', optionData, '... We sent:', messageToSend, metadata, '====', sendMessageHandler)
     sendMessageHandler && sendMessageHandler({
-      message: messageToSend,
-      metadata
+      message: messageToSend
     })
   }
 
   const handleSkipButtonClick = () => {
     sendMessageHandler && sendMessageHandler({
-      message: 'Cancel',
-      metadata: {}
+      message: 'Cancel'
     })
   }
 
-  const showCancelButton = true
+  const showCancelButton = false
   // !isDisabled &&
   // isLastMessage &&
   // [
@@ -167,7 +167,7 @@ function BetFlowMessage () {
       <BettingWidget
         isInWidget={isInWidget}
         // isDisabled={isDisabled || !isLastMessage}
-        isDisabled={!isLastMessage}
+        // isDisabled={!isLastMessage}
         widgetConfig={tempWidgetConfig}
         widgetType={widgetType}
         onSelect={handleSelectBetOption}

@@ -11,6 +11,9 @@ import {
 export type SelectCallback = TeamStepData | MarketStepData;
 
 export type WidgetConfig = {
+  // competition widget
+  initialValue?: string;
+  // market widget
   categoryIds?: string;
   competitionIds?: string;
   moduleId?: number;
@@ -20,7 +23,6 @@ export type WidgetConfig = {
   gameIds?: string;
   type?: string;
   category?: string;
-  initialValue?: string;
   limit?: number;
   sport?: string;
   region?: string;
@@ -48,8 +50,7 @@ function BettingWidget ({
   isDisabled,
   isInWidget
 }: Props) {
-  const isBettingScriptsLoaded = localStorage.getItem('isBettingScriptsLoaded') || ''
-  const [isLoaded, setIsLoaded] = useState(!!isBettingScriptsLoaded)
+  const [isLoaded, setIsLoaded] = useState(Boolean(document.getElementById('SP_WIDGET_JS_FILE')))
   const tempConfig: WidgetConfig = { ...widgetConfig }
   if (onSelect) {
     const callbackFnName = `hoorySuccessCallback_${uuid()}`;
@@ -64,6 +65,7 @@ function BettingWidget ({
       const runTimeScript = document.createElement('script')
       const styledRef = document.createElement('link')
       const key = uuid()
+      mainScript.id = 'SP_WIDGET_JS_FILE'
       mainScript.src = `${FILES_PATH}/js/main.chunk.js?key=${key}`
       runTimeScript.src = `${FILES_PATH}/js/runtime-main.js?key=${key}`
       styledRef.href = `${FILES_PATH}/css/main.chunk.css?key=${key}`
@@ -74,7 +76,6 @@ function BettingWidget ({
       document.body.appendChild(styledRef)
 
       mainScript.onload = function () {
-        localStorage.setItem('isBettingScriptsLoaded', '1')
         setIsLoaded(true);
         (window as any).initHooryWidgets()
       }

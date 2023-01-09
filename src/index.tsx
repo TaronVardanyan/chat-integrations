@@ -24,8 +24,6 @@ interface Props extends ContextType {}
 function IntegrationWrapper (props: Props) {
   let Component = <div>This form type is not implemented yet! Please add your custom components on <a href="https://github.com/hoory-com/chat-integrations" target="_blank" rel="noreferrer">our public integrations repository</a>.</div>
 
-  console.log('========aa', props)
-
   switch (props.field.custom_type) {
     /**
        * Ucraft
@@ -60,7 +58,7 @@ function IntegrationWrapper (props: Props) {
   }
 
   return <MessageProvider value={props}>
-  {Component}
+    {Component}
   </MessageProvider>
 }
 

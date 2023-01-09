@@ -23,7 +23,7 @@ export type MarketStepData = {
 }
 
 export type BetFlowData = {
-  teamName: string,
+  team_name: string,
   competition: TeamStepData,
   market: MarketStepData,
   subMarket: string,
