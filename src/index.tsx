@@ -1,4 +1,4 @@
-import React, { lazy, useMemo, memo } from 'react'
+import React, { lazy, memo } from 'react'
 import { ContextType, Provider as MessageProvider } from './contexts'
 
 /**
@@ -22,51 +22,43 @@ const SpringBuilderComponentsSwitcher = lazy(() => import('./integrations/spring
 interface Props extends ContextType {}
 
 function IntegrationWrapper (props: Props) {
-  const Component = useMemo(() => {
-    switch (props.field.type) {
-      /**
+  let Component = <div>This form type is not implemented yet! Please add your custom components on <a href="https://github.com/hoory-com/chat-integrations" target="_blank" rel="noreferrer">our public integrations repository</a>.</div>
+
+  switch (props.field.custom_type) {
+    /**
        * Ucraft
        */
-      // case 'UCRAFT_LIKED_WEBSITE':
-      //   return <UCLikedWebsite />;
-      // case 'UCRAFT_PROJECT_NAME':
-      //   return <UCProjectName />;
-      // case 'UCRAFT_BILLING':
-      //   return <UCPaymentInfo />;
-      // case 'UCRAFT_DESIGN_TEMPLATE':
-      //   return <UCDesignTemplate />;
-      // case 'UCRAFT_WEBSITE_DESIGN':
-      //   return <UCWebsiteDesign />;
-      // case 'UCRAFT_WEBSITE_URL':
-      //   return <UCMultiSelection />;
-      // case 'UCRAFT_PROJECT_LOGO':
-      //   return <UCLogoUploader />;
-      // case 'UCRAFT_PROJECT_URL':
-      //   return <UCProjectUrl />;
-      // case 'UCRAFT_EMAIL':
-      //   return <UCUserEmail />;
+    // case 'UCRAFT_LIKED_WEBSITE':
+    //   return <UCLikedWebsite />;
+    // case 'UCRAFT_PROJECT_NAME':
+    //   return <UCProjectName />;
+    // case 'UCRAFT_BILLING':
+    //   return <UCPaymentInfo />;
+    // case 'UCRAFT_DESIGN_TEMPLATE':
+    //   return <UCDesignTemplate />;
+    // case 'UCRAFT_WEBSITE_DESIGN':
+    //   return <UCWebsiteDesign />;
+    // case 'UCRAFT_WEBSITE_URL':
+    //   return <UCMultiSelection />;
+    // case 'UCRAFT_PROJECT_LOGO':
+    //   return <UCLogoUploader />;
+    // case 'UCRAFT_PROJECT_URL':
+    //   return <UCProjectUrl />;
+    // case 'UCRAFT_EMAIL':
+    //   return <UCUserEmail />;
 
-      /**
+    /**
        * Spring builder
        */
-      case 'ASK_TEAM':
-      case 'ASK_SPORT':
-      case 'ASK_GAME':
-      case 'ASK_COMPETITION':
-      case 'ASK_MARKET':
-      case 'ASK_MARKET_GROUP':
-      case 'ASK_MARKET_NAME':
-      case 'ASK_CONFIRM_DETAILS':
-      case 'ASK_LOGIN':
-      case 'SHOW_BALANCE':
-        return <SpringBuilderComponentsSwitcher />
-      default:
-        return <div>This form type is not implemented yet! Please add your custom components on <a href="https://github.com/hoory-com/chat-integrations" target="_blank" rel="noreferrer">our public integrations repository</a>.</div>
-    }
-  }, [props.field.type])
+    case 'COMPETITION':
+    case 'MARKET':
+    case 'CONFIRM_DETAILS':
+    case 'SHOW_BALANCE':
+      Component = <SpringBuilderComponentsSwitcher />
+  }
 
   return <MessageProvider value={props}>
-  {Component}
+    {Component}
   </MessageProvider>
 }
 
