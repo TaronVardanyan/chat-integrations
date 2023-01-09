@@ -140,7 +140,8 @@ function BetFlowMessage () {
     // eslint-disable-next-line no-console
     console.log('Widget optionData::::', optionData, '... We sent:', messageToSend, metadata, '====', sendMessageHandler)
     sendMessageHandler && sendMessageHandler({
-      message: messageToSend
+      message: messageToSend,
+      addToRedux: false
     })
   }
 
