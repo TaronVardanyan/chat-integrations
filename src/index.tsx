@@ -24,7 +24,7 @@ interface Props extends ContextType {}
 function IntegrationWrapper (props: Props) {
   let Component = <div>This form type is not implemented yet! Please add your custom components on <a href="https://github.com/hoory-com/chat-integrations" target="_blank" rel="noreferrer">our public integrations repository</a>.</div>
 
-  switch (props.field.custom_type) {
+  switch (props.field.custom_provider) {
     /**
        * Ucraft
        */
@@ -50,10 +50,7 @@ function IntegrationWrapper (props: Props) {
     /**
        * Spring builder
        */
-    case 'COMPETITION':
-    case 'MARKET':
-    case 'CONFIRM_DETAILS':
-    case 'SHOW_BALANCE':
+    case 'SPRING_BUILDER':
       Component = <SpringBuilderComponentsSwitcher />
   }
 
