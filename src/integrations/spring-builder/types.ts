@@ -14,12 +14,31 @@ export type TeamStepData = {
 }
 
 export type MarketStepData = {
+  marketType: string;
   marketName: string;
-  eventName: string;
+  marketId: number;
   marketGroupName: string;
-  marketGroupId: string;
-  marketId: string;
-  eventId: string;
+  marketGroupId: number;
+  eventName: string;
+  coeficient: number;
+  eventId: number;
+  expressId: number;
+  gameDate: number;
+  competitionName: string;
+  gameName: string;
+  isLive: boolean;
+  sportName: string;
+  sportAlias: string;
+  gameId: number;
+  region: string;
+  competitionId: number;
+  team1: string;
+  team2: string;
+}
+
+export type ConfirmStepData = {
+  status: string;
+  message: string;
 }
 
 export type BetFlowData = {
