@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { v4 as uuid } from 'uuid'
 import { FILES_PATH } from './constants'
-import { MarketStepData, TeamStepData } from '../types'
+import { ConfirmStepData, MarketStepData, TeamStepData } from '../types'
 import {
   StyledWidgetWrapper,
   StyledClickBlocker,
   StyledLoadingSkeleton
 } from './styles'
 
-export type SelectCallback = TeamStepData | MarketStepData;
+export type SelectCallback = TeamStepData & MarketStepData & ConfirmStepData;
 
 export type WidgetConfig = {
   // competition widget

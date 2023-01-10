@@ -41,16 +41,16 @@ function BetFlowMessage () {
       tempWidgetConfig.competition = messageData.competition.competitionId + ''
       tempWidgetConfig.game = messageData.competition.gameId + ''
       break
-    case 'CONFIRM_DETAILS':
+    case 'CONFIRMATION_DETAILS':
       widgetType = 'HooryBetslip'
       tempWidgetConfig.initialAmount = parseInt(
         (messageData.amount || '').replace(/[^0-9]/g, ''),
         10
-      )
-      tempWidgetConfig.marketId = parseInt(messageData.marketId, 10)
-      tempWidgetConfig.eventId = parseInt(messageData.eventId, 10)
-      tempWidgetConfig.gameId = parseInt(messageData.gameId, 10)
-      tempWidgetConfig.competitionId = parseInt(messageData.competitionId, 10)
+      ) || 0
+      tempWidgetConfig.marketId = messageData.market.marketId
+      tempWidgetConfig.eventId = messageData.market.eventId
+      tempWidgetConfig.gameId = messageData.market.gameId
+      tempWidgetConfig.competitionId = messageData.market.competitionId
 
       break
     case 'LOGIN':
@@ -70,6 +70,26 @@ function BetFlowMessage () {
     let messageToSend = 'N/A'
     messageToSend = JSON.stringify(optionData)
 
+    if (field?.custom_type === 'CONFIRMATION_DETAILS') {
+      switch (optionData.status) {
+        case 'success':
+          messageToSend = 'Place a bet'
+          metadata.messageTextAlias = 'Yes'
+          break
+        case 'cancel':
+          messageToSend = 'Cancel'
+          metadata.messageTextAlias = 'No'
+          break
+        case 'unauthorized':
+          messageToSend = 'Sign in and bet'
+          break
+        case 'error':
+          messageToSend = 'Place a bet'
+          metadata.messageTextAlias = 'Yes'
+          metadata.error = optionData.message || 'unknown'
+          break
+      }
+    }
     // switch (field?.custom_type) {
     //   case 'COMPETITION':
     //     // eslint-disable-next-line no-case-declarations
@@ -131,11 +151,6 @@ function BetFlowMessage () {
     //     }
     //     break
     // }
-    //
-    // setMessageItem({
-    //   ...messageData,
-    //   ...newMessageData
-    // });
 
     // eslint-disable-next-line no-console
     console.log('Widget optionData::::', optionData, '... We sent:', messageToSend, metadata, '====', sendMessageHandler)
