@@ -14,12 +14,14 @@ export const StyledWidgetWrapper = styled.div<{ $isDisabled?: boolean; $isInWidg
   font-family: geomanist, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue',
     Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
     'Noto Color Emoji' !important;
-
+  
+  max-width: 500px;
   border-radius: 12px;
   overflow: hidden;
   position: relative;
   bottom: -5px;
   margin-top: 8px;
+  background: #fff;
   
   ${ifProp(
     '$isInWidget',
@@ -46,6 +48,9 @@ export const StyledWidgetWrapper = styled.div<{ $isDisabled?: boolean; $isInWidg
   }
   .market-collapse > div:nth-child(2) {
     display: none;
+  }
+  .betslipContainer {
+    box-shadow: none !important;
   }
 `
 

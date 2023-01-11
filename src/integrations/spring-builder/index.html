@@ -20,8 +20,11 @@
 		 data-loaded="false"></div>
 	<hr />
 
+	<div data-widget="HooryBetslip" data-loaded="false" data-configs='{"initialAmount":0,"marketId":1109229046,"eventId":3394614004,"gameId":21391324,"competitionId":538,"hasCallback":true,"callbackName":"hoorySuccessCallback"}'></div>
+	<hr />
+
 	<h1>Step8: Login form</h1>
-	<div data-widget="HooryAccounts" data-loaded="false" data-configs='{"openLogin":true}'></div>
+	<div data-widget="HooryAccounts" data-loaded="false" data-configs='{"openLogin":true, "hasCallback":true,"callbackName":"hoorySuccessCallback"}'></div>
 
 
 	<script>
@@ -29,6 +32,7 @@
 			console.log(params)
 		}
 		window.initHooryWidgets();
+		window.initWidgets();
     </script>
 </body>
 </html>
