@@ -41,6 +41,16 @@ export type ConfirmStepData = {
   message: string;
 }
 
+export type LoginStepData = {
+  auth_token: string;
+  user_id: number;
+  qr_code_origin?: any;
+  jwe_token: string;
+  username: string;
+  email: string;
+  status: string;
+}
+
 export type BetFlowData = {
   team_name: string,
   competition: TeamStepData,

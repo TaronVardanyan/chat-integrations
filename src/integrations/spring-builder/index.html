@@ -1,38 +1,48 @@
+
 <!DOCTYPE html>
 <html lang="en-us" data-theme="v3-light">
 <head>
 	<title>Hoory Widgets</title>
-	<link href="https://static.springbuilder.site/widgets-x/static/css/main.chunk.css" rel="stylesheet" type="text/css">
-	<script src="https://static.springbuilder.site/widgets-x/static/js/main.chunk.js"></script>
-	<script src="https://static.springbuilder.site/widgets-x/static/js/runtime-main.js"></script>
+	<script>
+		window.partnerConfigs = {
+			swarmUrl: "wss://eu-swarm-springre.betconstruct.com",
+			defaultOddAccept: ''
+		}
+		partnerConfigs.springConfig = {}
+
+		window.partnerConfigs.springConfig.partnerId = 333
+	</script>
+	<link href="https://static.betconstruct.me/widgets-x/static/css/main.chunk.css" rel="stylesheet" type="text/css">
+	<script src="https://static.betconstruct.me/widgets-x/static/js/main.chunk.js"></script>
+	<script src="https://static.betconstruct.me/widgets-x/static/js/runtime-main.js"></script>
 </head>
 <body>
-	<h1>Step2: Competition</h1>
-	<div data-widget="HoorySearch"
-     data-configs='{"initialValue": "arsenal","hasCallback": true,"callbackName": "hoorySuccessCallback"}'
-     data-loaded="false"></div>
-	<hr />
+<h1>Step2: Competition</h1>
+<div data-widget="HoorySearch"
+	 data-configs='{"initialValue": "arsenal","hasCallback": true,"callbackName": "hoorySuccessCallback"}'
+	 data-loaded="false"></div>
+<hr />
 
-	<h1>Step3: Choose Market</h1>
+<h1>Step3: Choose Market</h1>
 
-	<div data-widget="HoorySingleGame"
-		 data-configs='{"sport":"Soccer","region":"England","competition":"538","game":"21406547","hasCallback":true,"callbackName":"hoorySuccessCallback"}'
-		 data-loaded="false"></div>
-	<hr />
+<div data-widget="HoorySingleGame"
+	 data-configs='{"sport":"Soccer","region":"England","competition":"538","game":"21406547","hasCallback":true,"callbackName":"hoorySuccessCallback"}'
+	 data-loaded="false"></div>
+<hr />
 
-	<div data-widget="HooryBetslip" data-loaded="false" data-configs='{"initialAmount":0,"marketId":1109229046,"eventId":3394614004,"gameId":21391324,"competitionId":538,"hasCallback":true,"callbackName":"hoorySuccessCallback"}'></div>
-	<hr />
+<div data-widget="HooryBetslip" data-loaded="false" data-configs='{"initialAmount":0,"marketId":1109229046,"eventId":3394614004,"gameId":21391324,"competitionId":538,"hasCallback":true,"callbackName":"hoorySuccessCallback"}'></div>
+<hr />
 
-	<h1>Step8: Login form</h1>
-	<div data-widget="HooryAccounts" data-loaded="false" data-configs='{"openLogin":true, "hasCallback":true,"callbackName":"hoorySuccessCallback"}'></div>
+<h1>Step8: Login form</h1>
+<div data-widget="HooryAccount" data-loaded="false" data-configs='{"openLogin":true}'></div>
 
 
-	<script>
-		var hoorySuccessCallback =  (params)=>{
-			console.log(params)
-		}
-		window.initHooryWidgets();
-		window.initWidgets();
-    </script>
+
+<script>
+	var hoorySuccessCallback =  (params)=>{
+		console.log(params)
+	}
+	window.initHooryWidgets();
+</script>
 </body>
 </html>

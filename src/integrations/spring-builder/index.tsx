@@ -73,19 +73,16 @@ function BetFlowMessage () {
     if (field?.custom_type === 'CONFIRMATION_DETAILS') {
       switch (optionData.status) {
         case 'success':
-          messageToSend = 'Place a bet'
-          metadata.messageTextAlias = 'Yes'
+          messageToSend = 'BET'
           break
         case 'cancel':
-          messageToSend = 'Cancel'
-          metadata.messageTextAlias = 'No'
+          messageToSend = '/restart'
           break
         case 'unauthorized':
-          messageToSend = 'Sign in and bet'
+          messageToSend = 'SIGNIN'
           break
         case 'error':
-          messageToSend = 'Place a bet'
-          metadata.messageTextAlias = 'Yes'
+          messageToSend = 'ERROR'
           metadata.error = optionData.message || 'unknown'
           break
       }
