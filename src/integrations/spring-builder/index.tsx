@@ -53,7 +53,7 @@ function BetFlowMessage () {
       tempWidgetConfig.competitionId = messageData.market.competitionId
 
       break
-    case 'LOGIN':
+    case 'SIGNIN':
       widgetType = 'HooryAccount'
       break
     case 'SHOW_BALANCE':
@@ -73,7 +73,7 @@ function BetFlowMessage () {
     if (field?.custom_type === 'CONFIRMATION_DETAILS') {
       switch (optionData.status) {
         case 'success':
-          messageToSend = 'BET'
+          messageToSend = 'success'
           break
         case 'cancel':
           messageToSend = '/restart'
@@ -82,9 +82,15 @@ function BetFlowMessage () {
           messageToSend = 'SIGNIN'
           break
         case 'error':
-          messageToSend = 'ERROR'
+          messageToSend = '/error'
           metadata.error = optionData.message || 'unknown'
           break
+      }
+    } else if (field?.custom_type === 'SIGNIN') {
+      if (optionData.status === 'success') {
+        messageToSend = 'BET_PLACE'
+      } else {
+        messageToSend = '/error'
       }
     }
     // switch (field?.custom_type) {
