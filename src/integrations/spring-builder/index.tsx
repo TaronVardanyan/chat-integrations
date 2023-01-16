@@ -41,6 +41,7 @@ function BetFlowMessage () {
       tempWidgetConfig.competition = messageData.competition.competitionId + ''
       tempWidgetConfig.game = messageData.competition.gameId + ''
       break
+    case 'BET_PLACE':
     case 'CONFIRMATION_DETAILS':
       widgetType = 'HooryBetslip'
       tempWidgetConfig.initialAmount = parseInt(
@@ -67,10 +68,11 @@ function BetFlowMessage () {
    */
   const handleSelectBetOption = (optionData: SelectCallback) => {
     const metadata: Record<string, any> = {}
-    let messageToSend = 'N/A'
+    let messageToSend = ''
     messageToSend = JSON.stringify(optionData)
 
-    if (field?.custom_type === 'CONFIRMATION_DETAILS') {
+    if (field?.custom_type === 'CONFIRMATION_DETAILS' ||
+        field?.custom_type === 'BET_PLACE') {
       switch (optionData.status) {
         case 'success':
           messageToSend = 'success'
@@ -82,8 +84,8 @@ function BetFlowMessage () {
           messageToSend = 'SIGNIN'
           break
         case 'error':
-          messageToSend = '/error'
-          metadata.error = optionData.message || 'unknown'
+          // messageToSend = '/error'
+          // metadata.error = optionData.message || 'unknown'
           break
       }
     } else if (field?.custom_type === 'SIGNIN') {
@@ -154,6 +156,8 @@ function BetFlowMessage () {
     //     }
     //     break
     // }
+
+    if (!messageToSend) return
 
     // eslint-disable-next-line no-console
     console.log('Widget optionData::::', optionData, '... We sent:', messageToSend, metadata, '====', sendMessageHandler)
