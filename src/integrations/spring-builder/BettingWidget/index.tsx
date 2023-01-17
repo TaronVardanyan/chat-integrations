@@ -82,7 +82,7 @@ function BettingWidget ({
     } else {
       (window as any).initHooryWidgets()
     }
-  }, [])
+  }, [isLoaded])
 
   return (
     <StyledWidgetWrapper $isDisabled={isDisabled} $isInWidget={isInWidget}>

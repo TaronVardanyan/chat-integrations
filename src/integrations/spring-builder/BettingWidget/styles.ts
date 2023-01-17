@@ -16,11 +16,9 @@ export const StyledWidgetWrapper = styled.div<{ $isDisabled?: boolean; $isInWidg
     'Noto Color Emoji' !important;
   
   max-width: 500px;
-  border-radius: 12px;
+  border-radius: 13px;
   overflow: hidden;
-  position: relative;
-  bottom: -5px;
-  margin-top: 8px;
+  margin: -8px;
   background: #fff;
   
   ${ifProp(
