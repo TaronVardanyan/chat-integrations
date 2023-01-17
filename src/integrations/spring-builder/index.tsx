@@ -8,7 +8,6 @@ import { useFormSlots } from '../../hooks'
 
 function BetFlowMessage () {
   const {
-    message,
     isInWidget,
     sendMessageHandler,
     isLastMessage,
@@ -17,7 +16,7 @@ function BetFlowMessage () {
 
   const { t } = useTranslation('ui')
   const messageData = useFormSlots() as BetFlowData
-  console.log('========form fields', message.form?.fields, 'messageData:::', messageData, {
+  console.log({
     isLastMessage
   })
 
@@ -71,8 +70,10 @@ function BetFlowMessage () {
     let messageToSend = ''
     messageToSend = JSON.stringify(optionData)
 
-    if (field?.custom_type === 'CONFIRMATION_DETAILS' ||
-        field?.custom_type === 'BET_PLACE') {
+    if (
+      field?.custom_type === 'CONFIRMATION_DETAILS' ||
+      field?.custom_type === 'BET_PLACE'
+    ) {
       switch (optionData.status) {
         case 'success':
           messageToSend = 'success'
@@ -95,67 +96,6 @@ function BetFlowMessage () {
         messageToSend = '/error'
       }
     }
-    // switch (field?.custom_type) {
-    //   case 'COMPETITION':
-    //     // eslint-disable-next-line no-case-declarations
-    //     const teamNames = (optionData.name || '').split(' vs ')
-    //     messageToSend = optionData.name || ''
-    //     metadata.sport = optionData.sportType
-    //     metadata.sportAlias = optionData.sportTypeAlias
-    //     metadata.teamName = teamNames[0] || ''
-    //     metadata.opponentTeam = teamNames[1] || ''
-    //     metadata.competition = optionData.competitionName
-    //     metadata.competitionId = optionData.competitionId
-    //     metadata.game = optionData.name
-    //     metadata.gameDate = optionData.gameDate
-    //     metadata.gameId = optionData.gameId
-    //     metadata.region = optionData.region
-    //     break
-    //   case 'MARKET':
-    //     messageToSend = `${optionData.marketName || ''} - ${optionData.eventName || ''}`
-    //     metadata.market = optionData.marketGroupName
-    //     metadata.subMarket = optionData.marketName
-    //     metadata.marketGroupId = optionData.marketGroupId
-    //     metadata.event = optionData.eventName
-    //     metadata.marketId = optionData.marketId
-    //     metadata.eventId = optionData.eventId
-    //
-    //     break
-    //   case 'CONFIRM_DETAILS':
-    //     switch (optionData.status) {
-    //       case 'success':
-    //         messageToSend = 'Place a bet'
-    //         metadata.messageTextAlias = 'Yes'
-    //         break
-    //       case 'cancel':
-    //         messageToSend = 'Cancel'
-    //         metadata.messageTextAlias = 'No'
-    //         break
-    //       case 'unauthorized':
-    //         messageToSend = 'Sign in and bet'
-    //         break
-    //       case 'error':
-    //         messageToSend = 'Place a bet'
-    //         metadata.messageTextAlias = 'Yes'
-    //         metadata.error = optionData.message || 'unknown'
-    //         break
-    //     }
-    //
-    //     break
-    //   case 'LOGIN':
-    //     if (optionData.status === 'success') {
-    //       messageToSend = 'Signed in successfully!'
-    //       metadata.authToken = optionData.auth_token
-    //       metadata.email = optionData.email
-    //       metadata.firstName = optionData.first_name
-    //       metadata.lastName = optionData.last_name
-    //       metadata.userId = optionData.user_id
-    //       metadata.username = optionData.username
-    //     } else {
-    //       messageToSend = 'Cancel'
-    //     }
-    //     break
-    // }
 
     if (!messageToSend) return
 
@@ -174,23 +114,13 @@ function BetFlowMessage () {
   }
 
   const showCancelButton = false
-  // !isDisabled &&
-  // isLastMessage &&
-  // [
-  //   'ask_sport',
-  //   'ask_game',
-  //   'ask_competition',
-  //   'ask_market',
-  //   'ask_market_group',
-  //   'ask_market_name'
-  // ].includes(betFlow?.step || '')
 
   return (
     <>
       <BettingWidget
         isInWidget={isInWidget}
         // isDisabled={isDisabled || !isLastMessage}
-        // isDisabled={!isLastMessage}
+        isDisabled={isLastMessage}
         widgetConfig={tempWidgetConfig}
         widgetType={widgetType}
         onSelect={handleSelectBetOption}
