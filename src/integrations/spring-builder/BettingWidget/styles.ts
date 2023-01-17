@@ -18,7 +18,6 @@ export const StyledWidgetWrapper = styled.div<{ $isDisabled?: boolean; $isInWidg
   max-width: 500px;
   border-radius: 13px;
   overflow: hidden;
-  margin: -8px;
   background: #fff;
   
   ${ifProp(
@@ -49,6 +48,9 @@ export const StyledWidgetWrapper = styled.div<{ $isDisabled?: boolean; $isInWidg
   }
   .betslipContainer {
     box-shadow: none !important;
+  }
+  .internalLoadingBlock {
+    position: relative !important;
   }
 `
 

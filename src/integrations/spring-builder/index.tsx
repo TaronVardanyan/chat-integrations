@@ -120,7 +120,7 @@ function BetFlowMessage () {
       <BettingWidget
         isInWidget={isInWidget}
         // isDisabled={isDisabled || !isLastMessage}
-        isDisabled={!isLastMessage}
+        isDisabled={isLastMessage}
         widgetConfig={tempWidgetConfig}
         widgetType={widgetType}
         onSelect={handleSelectBetOption}
