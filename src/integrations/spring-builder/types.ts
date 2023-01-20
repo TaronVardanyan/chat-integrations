@@ -53,16 +53,16 @@ export type LoginStepData = {
 
 export type DepositAmountCallback = {
   status?: 'unauthorized' | 'cancel' | 'authorized';
-  data: string; // amount
+  data?: string; // amount
 }
 
 export type DepositPaymentListCallback = {
-  paymentId: string;
+  paymentId?: string;
   status?: 'cancel'
 }
 
 export type DepositFinalCallback = {
-  payStatus: 'success' | 'cancel' | 'fail' | 'pending';
+  payStatus?: 'success' | 'cancel' | 'fail' | 'pending';
 }
 
 export type BetFlowData = {
@@ -118,4 +118,4 @@ export type WidgetConfig = {
 };
 
 export type SpringBuilderWidgetType = 'HooryGameList' | 'HoorySearch' | 'HoorySingleGame' | 'HooryBetslip' | 'HooryAccount' | 'HooryBalance' | 'HooryPaymentAmount' | 'HooryPaymentList' | 'HooryPaymentView' | ''
-export type FieldType = 'COMPETITION' | 'MARKET' | 'CONFIRMATION_DETAILS' | 'BET_PLACE' | 'SIGNIN' | 'PAYMENT_LIST' | 'PAYMENT_AMOUNT' | 'PAYMENT_VIEW'
+export type FieldType = 'COMPETITION' | 'MARKET' | 'CONFIRMATION_DETAILS' | 'BET_PLACE' | 'SIGNIN' | 'PAYMENT_LIST' | 'PAYMENT_AMOUNT' | 'PAYMENT_VIEW' | 'SHOW_BALANCE'

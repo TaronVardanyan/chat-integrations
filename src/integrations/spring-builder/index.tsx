@@ -20,7 +20,8 @@ function BetFlowMessage () {
   const messageData = useFormSlots() as BetFlowData
   const currentFieldType = field?.custom_type as FieldType
   console.log({
-    isLastMessage
+    isLastMessage,
+    key: widgetKey.current
   })
 
   const tempWidgetConfig: WidgetConfig = {}
