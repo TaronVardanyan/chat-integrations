@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { memo, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
-import BettingWidget, { WidgetConfig, SelectCallback } from './BettingWidget'
+import { v4 as uuid } from 'uuid'
+import BettingWidget, { SelectCallback } from './BettingWidget'
 import { useMessageContext } from '../../contexts'
-import { BetFlowData } from './types'
+import { BetFlowData, WidgetConfig } from './types'
 import { StyledSkipButton, StyledSkipButtonWrapper } from './styles'
 import { useFormSlots } from '../../hooks'
 
@@ -13,6 +14,7 @@ function BetFlowMessage () {
     isLastMessage,
     field
   } = useMessageContext()
+  const widgetKey = useRef(uuid())
 
   const { t } = useTranslation('ui')
   const messageData = useFormSlots() as BetFlowData
@@ -59,6 +61,20 @@ function BetFlowMessage () {
     case 'SHOW_BALANCE':
       widgetType = 'HooryBalance'
       break
+    case 'PAYMENT_AMOUNT':
+      tempWidgetConfig.isDeposit = true
+      widgetType = 'HooryPaymentAmount'
+      break
+    case 'PAYMENT_LIST':
+      tempWidgetConfig.actionType = 'deposit'
+      widgetType = 'HooryPaymentList'
+      break
+    case 'PAYMENT_VIEW':
+      tempWidgetConfig.actionType = 'deposit'
+      tempWidgetConfig.amount = messageData.payment_amount.data
+      tempWidgetConfig.paymentId = messageData.payment_list.paymentId
+      widgetType = 'HooryPaymentView'
+      break
   }
 
   /**
@@ -95,6 +111,15 @@ function BetFlowMessage () {
       } else {
         messageToSend = '/error'
       }
+    } else if (field?.custom_type === 'PAYMENT_AMOUNT') {
+      switch (optionData.status) {
+        case 'unauthorized':
+          messageToSend = 'SIGNIN'
+          break
+        case 'cancel':
+          messageToSend = '/restart'
+          break
+      }
     }
 
     if (!messageToSend) return
@@ -119,11 +144,11 @@ function BetFlowMessage () {
     <>
       <BettingWidget
         isInWidget={isInWidget}
-        // isDisabled={isDisabled || !isLastMessage}
         isDisabled={isLastMessage}
         widgetConfig={tempWidgetConfig}
         widgetType={widgetType}
         onSelect={handleSelectBetOption}
+        widgetKey={widgetKey.current}
       />
 
       {showCancelButton && (
@@ -137,4 +162,4 @@ function BetFlowMessage () {
   )
 }
 
-export default BetFlowMessage
+export default memo(BetFlowMessage)

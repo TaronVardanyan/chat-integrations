@@ -51,10 +51,29 @@ export type LoginStepData = {
   status: string;
 }
 
+export type DepositAmountCallback = {
+  status: 'unauthorized' | 'cancel' | 'authorized';
+  data: string; // amount
+}
+
+export type DepositPaymentListCallback = {
+  paymentId: string;
+}
+
+export type DepositFinalCallback = {
+  payStatus: 'success' | 'cancel' | 'fail' | 'pending';
+}
+
 export type BetFlowData = {
+  // betting flow
   team_name: string,
   competition: TeamStepData,
   market: MarketStepData,
+  // deposit flow
+  payment_amount: DepositAmountCallback,
+  payment_list: DepositPaymentListCallback,
+  payment_view: DepositFinalCallback,
+
   subMarket: string,
   event: string,
   eventBase: string,
@@ -66,3 +85,33 @@ export type BetFlowData = {
   eventId: string,
   marketId: string
 }
+
+export type WidgetConfig = {
+  // competition widget
+  initialValue?: string;
+  // market widget
+  categoryIds?: string;
+  competitionIds?: string;
+  moduleId?: number;
+  fit?: string;
+  hasCallback?: boolean;
+  callbackName?: string;
+  gameIds?: string;
+  type?: string;
+  category?: string;
+  limit?: number;
+  sport?: string;
+  region?: string;
+  competition?: string;
+  game?: string;
+  marketId?: number;
+  gameId?: number;
+  competitionId?: number;
+  initialAmount?: number;
+  eventId?: number;
+  // deposit
+  isDeposit?: boolean;
+  actionType?: 'deposit';
+  paymentId?: string;
+  amount?: string;
+};

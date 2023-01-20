@@ -2,19 +2,6 @@ import React, { lazy, memo } from 'react'
 import { ContextType, Provider as MessageProvider } from './contexts'
 
 /**
- * Ucraft
- */
-// const UCProjectName = lazy(() => import("./integrations/ucraft/ProjectName"));
-// const UCProjectUrl = lazy(() => import("./integrations/ucraft/ProjectUrl"));
-// const UCUserEmail = lazy(() => import("./integrations/ucraft/UserEmail"));
-// const UCLogoUploader = lazy(() => import("./integrations/ucraft/LogoUploader"));
-// const UCPaymentInfo = lazy(() => import("./integrations/ucraft/PaymentInfo"));
-// const UCWebsiteDesign = lazy(() => import("./integrations/ucraft/WebsiteDesign"));
-// const UCLikedWebsite = lazy(() => import("./integrations/ucraft/LikedWebsite"));
-// const UCMultiSelection = lazy(() => import("./integrations/ucraft/MultiSelection"));
-// const UCDesignTemplate = lazy(() => import("./integrations/ucraft/DesignTemplate"));
-
-/**
  * Spring builder
  */
 const SpringBuilderComponentsSwitcher = lazy(() => import('./integrations/spring-builder'))
@@ -26,8 +13,8 @@ function IntegrationWrapper (props: Props) {
 
   switch (props.field.custom_provider) {
     /**
-       * Ucraft
-       */
+     * Ucraft
+     */
     // case 'UCRAFT_LIKED_WEBSITE':
     //   return <UCLikedWebsite />;
     // case 'UCRAFT_PROJECT_NAME':
@@ -48,8 +35,8 @@ function IntegrationWrapper (props: Props) {
     //   return <UCUserEmail />;
 
     /**
-       * Spring builder
-       */
+     * Spring builder
+     */
     case 'SPRING_BUILDER':
       Component = <SpringBuilderComponentsSwitcher />
   }

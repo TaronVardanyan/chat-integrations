@@ -15,7 +15,6 @@ export const StyledWidgetWrapper = styled.div<{ $isDisabled?: boolean; $isInWidg
     Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
     'Noto Color Emoji' !important;
   
-  max-width: 500px;
   border-radius: 13px;
   overflow: hidden;
   background: #fff;

@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react'
-import { v4 as uuid } from 'uuid'
+import React, { useEffect, useState, memo } from 'react'
 import { FILES_PATH } from './constants'
-import { ConfirmStepData, MarketStepData, TeamStepData } from '../types'
+import { ConfirmStepData, MarketStepData, TeamStepData, WidgetConfig } from '../types'
 import {
   StyledWidgetWrapper,
   StyledClickBlocker,
@@ -10,37 +9,13 @@ import {
 
 export type SelectCallback = TeamStepData & MarketStepData & ConfirmStepData;
 
-export type WidgetConfig = {
-  // competition widget
-  initialValue?: string;
-  // market widget
-  categoryIds?: string;
-  competitionIds?: string;
-  moduleId?: number;
-  fit?: string;
-  hasCallback?: boolean;
-  callbackName?: string;
-  gameIds?: string;
-  type?: string;
-  category?: string;
-  limit?: number;
-  sport?: string;
-  region?: string;
-  competition?: string;
-  game?: string;
-  marketId?: number;
-  gameId?: number;
-  competitionId?: number;
-  initialAmount?: number;
-  eventId?: number;
-};
-
 type Props = {
   widgetType?: string;
   onSelect: (data: SelectCallback) => void;
   isDisabled?: boolean;
   isInWidget?: boolean;
   widgetConfig?: WidgetConfig;
+  widgetKey?: string;
 };
 
 function BettingWidget ({
@@ -48,13 +23,17 @@ function BettingWidget ({
   onSelect,
   widgetConfig,
   isDisabled,
-  isInWidget
+  isInWidget,
+  widgetKey
 }: Props) {
   const [isLoaded, setIsLoaded] = useState(Boolean(document.getElementById('SP_WIDGET_JS_FILE')))
   const tempConfig: WidgetConfig = { ...widgetConfig }
   if (onSelect) {
-    const callbackFnName = `hoorySuccessCallback_${uuid()}`;
-    (window as any)[callbackFnName] = onSelect
+    const callbackFnName = `hoorySuccessCallback_${widgetKey}`
+    window[callbackFnName] = (data: TeamStepData & MarketStepData & ConfirmStepData) => {
+      onSelect(data)
+      delete window[callbackFnName]
+    }
     tempConfig.hasCallback = true
     tempConfig.callbackName = callbackFnName
   }
@@ -64,11 +43,10 @@ function BettingWidget ({
       const mainScript = document.createElement('script')
       const runTimeScript = document.createElement('script')
       const styledRef = document.createElement('link')
-      const key = uuid()
       mainScript.id = 'SP_WIDGET_JS_FILE'
-      mainScript.src = `${FILES_PATH}/js/main.chunk.js?key=${key}`
-      runTimeScript.src = `${FILES_PATH}/js/runtime-main.js?key=${key}`
-      styledRef.href = `${FILES_PATH}/css/main.chunk.css?key=${key}`
+      mainScript.src = `${FILES_PATH}/js/main.chunk.js?widgetKey=${widgetKey}`
+      runTimeScript.src = `${FILES_PATH}/js/runtime-main.js?widgetKey=${widgetKey}`
+      styledRef.href = `${FILES_PATH}/css/main.chunk.css?widgetKey=${widgetKey}`
       styledRef.rel = 'stylesheet'
       styledRef.type = 'text/css'
       document.body.appendChild(mainScript)
@@ -97,4 +75,4 @@ function BettingWidget ({
   )
 }
 
-export default BettingWidget
+export default memo(BettingWidget)
