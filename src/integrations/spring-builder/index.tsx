@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { memo, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
-import BettingWidget, { WidgetConfig, SelectCallback } from './BettingWidget'
+import { v4 as uuid } from 'uuid'
+import BettingWidget, { SelectCallback } from './BettingWidget'
 import { useMessageContext } from '../../contexts'
-import { BetFlowData } from './types'
+import { BetFlowData, SpringBuilderWidgetType, FieldType, WidgetConfig } from './types'
 import { StyledSkipButton, StyledSkipButtonWrapper } from './styles'
 import { useFormSlots } from '../../hooks'
 
@@ -13,17 +14,20 @@ function BetFlowMessage () {
     isLastMessage,
     field
   } = useMessageContext()
+  const widgetKey = useRef(uuid())
 
   const { t } = useTranslation('ui')
   const messageData = useFormSlots() as BetFlowData
+  const currentFieldType = field?.custom_type as FieldType
   console.log({
-    isLastMessage
+    isLastMessage,
+    key: widgetKey.current
   })
 
   const tempWidgetConfig: WidgetConfig = {}
 
-  let widgetType = 'GameList'
-  switch (field?.custom_type) {
+  let widgetType: SpringBuilderWidgetType = ''
+  switch (currentFieldType) {
     case 'COMPETITION':
       if (messageData.competitionId) {
         widgetType = 'HooryGameList'
@@ -59,6 +63,20 @@ function BetFlowMessage () {
     case 'SHOW_BALANCE':
       widgetType = 'HooryBalance'
       break
+    case 'PAYMENT_AMOUNT':
+      tempWidgetConfig.isDeposit = true
+      widgetType = 'HooryPaymentAmount'
+      break
+    case 'PAYMENT_LIST':
+      tempWidgetConfig.actionType = 'deposit'
+      widgetType = 'HooryPaymentList'
+      break
+    case 'PAYMENT_VIEW':
+      tempWidgetConfig.actionType = 'deposit'
+      tempWidgetConfig.amount = messageData.payment_amount.data
+      tempWidgetConfig.paymentId = messageData.payment_list.paymentId
+      widgetType = 'HooryPaymentView'
+      break
   }
 
   /**
@@ -71,8 +89,8 @@ function BetFlowMessage () {
     messageToSend = JSON.stringify(optionData)
 
     if (
-      field?.custom_type === 'CONFIRMATION_DETAILS' ||
-      field?.custom_type === 'BET_PLACE'
+      currentFieldType === 'CONFIRMATION_DETAILS' ||
+      currentFieldType === 'BET_PLACE'
     ) {
       switch (optionData.status) {
         case 'success':
@@ -89,11 +107,38 @@ function BetFlowMessage () {
           // metadata.error = optionData.message || 'unknown'
           break
       }
-    } else if (field?.custom_type === 'SIGNIN') {
+    } else if (currentFieldType === 'SIGNIN') {
       if (optionData.status === 'success') {
         messageToSend = 'BET_PLACE'
       } else {
         messageToSend = '/error'
+      }
+    } else if (currentFieldType === 'PAYMENT_AMOUNT') {
+      switch (optionData.status) {
+        case 'unauthorized':
+          messageToSend = 'SIGNIN'
+          break
+        case 'cancel':
+          messageToSend = '/restart'
+          break
+      }
+    } else if (currentFieldType === 'PAYMENT_LIST') {
+      switch (optionData.payStatus) {
+        case 'success':
+          messageToSend = 'Success'
+          break
+        case 'cancel':
+          messageToSend = '/restart'
+          break
+      }
+    } else if (currentFieldType === 'PAYMENT_VIEW') {
+      switch (optionData.payStatus) {
+        case 'success':
+          messageToSend = 'Success'
+          break
+        case 'cancel':
+          messageToSend = '/restart'
+          break
       }
     }
 
@@ -119,11 +164,11 @@ function BetFlowMessage () {
     <>
       <BettingWidget
         isInWidget={isInWidget}
-        // isDisabled={isDisabled || !isLastMessage}
         isDisabled={isLastMessage}
         widgetConfig={tempWidgetConfig}
         widgetType={widgetType}
         onSelect={handleSelectBetOption}
+        widgetKey={widgetKey.current}
       />
 
       {showCancelButton && (
@@ -137,4 +182,4 @@ function BetFlowMessage () {
   )
 }
 
-export default BetFlowMessage
+export default memo(BetFlowMessage)

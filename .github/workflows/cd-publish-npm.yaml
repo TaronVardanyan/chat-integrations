@@ -1,0 +1,16 @@
+name: CD Publish NPM package
+run-name: "Publish: @${{ github.actor }} published @hoory/embed with: ${{ github.event.pull_request.title }}"
+on:
+  pull_request:
+    branches:
+      - master
+    types: [closed]
+
+jobs:
+  build-and-deploy:
+    uses: hoory-com/workflows/.github/workflows/publish-public-package.yaml@master
+    with:
+      path: './react'
+    secrets:
+      HOORY_GITHUB_PAT: ${{ secrets.HOORY_GITHUB_PAT }}
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
