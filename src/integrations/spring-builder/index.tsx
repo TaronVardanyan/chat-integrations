@@ -132,13 +132,10 @@ function BetFlowMessage () {
           break
       }
     } else if (currentFieldType === 'PAYMENT_VIEW') {
-      switch (optionData.payStatus) {
-        case 'success':
-          messageToSend = 'Success'
-          break
-        case 'cancel':
-          messageToSend = '/restart'
-          break
+      if (optionData.payStatus === 'success' || optionData.status === 'success') {
+        messageToSend = 'Success'
+      } else if (optionData.status === 'cancel') {
+        messageToSend = '/restart'
       }
     }
 

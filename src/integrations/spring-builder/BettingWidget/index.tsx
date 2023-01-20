@@ -31,6 +31,9 @@ function BettingWidget ({
   if (onSelect) {
     const callbackFnName = `hoorySuccessCallback_${widgetKey}`
     window[callbackFnName] = (data: TeamStepData & MarketStepData & ConfirmStepData) => {
+      // don't call function on disabled widgets
+      if (isDisabled) return
+
       onSelect(data)
       delete window[callbackFnName]
     }
