@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { v4 as uuid } from 'uuid'
 import BettingWidget, { SelectCallback } from './BettingWidget'
 import { useMessageContext } from '../../contexts'
-import { BetFlowData, WidgetConfig } from './types'
+import { BetFlowData, SpringBuilderWidgetType, FieldType, WidgetConfig } from './types'
 import { StyledSkipButton, StyledSkipButtonWrapper } from './styles'
 import { useFormSlots } from '../../hooks'
 
@@ -18,14 +18,15 @@ function BetFlowMessage () {
 
   const { t } = useTranslation('ui')
   const messageData = useFormSlots() as BetFlowData
+  const currentFieldType = field?.custom_type as FieldType
   console.log({
     isLastMessage
   })
 
   const tempWidgetConfig: WidgetConfig = {}
 
-  let widgetType = 'GameList'
-  switch (field?.custom_type) {
+  let widgetType: SpringBuilderWidgetType = ''
+  switch (currentFieldType) {
     case 'COMPETITION':
       if (messageData.competitionId) {
         widgetType = 'HooryGameList'
@@ -87,8 +88,8 @@ function BetFlowMessage () {
     messageToSend = JSON.stringify(optionData)
 
     if (
-      field?.custom_type === 'CONFIRMATION_DETAILS' ||
-      field?.custom_type === 'BET_PLACE'
+      currentFieldType === 'CONFIRMATION_DETAILS' ||
+      currentFieldType === 'BET_PLACE'
     ) {
       switch (optionData.status) {
         case 'success':
@@ -105,16 +106,34 @@ function BetFlowMessage () {
           // metadata.error = optionData.message || 'unknown'
           break
       }
-    } else if (field?.custom_type === 'SIGNIN') {
+    } else if (currentFieldType === 'SIGNIN') {
       if (optionData.status === 'success') {
         messageToSend = 'BET_PLACE'
       } else {
         messageToSend = '/error'
       }
-    } else if (field?.custom_type === 'PAYMENT_AMOUNT') {
+    } else if (currentFieldType === 'PAYMENT_AMOUNT') {
       switch (optionData.status) {
         case 'unauthorized':
           messageToSend = 'SIGNIN'
+          break
+        case 'cancel':
+          messageToSend = '/restart'
+          break
+      }
+    } else if (currentFieldType === 'PAYMENT_LIST') {
+      switch (optionData.payStatus) {
+        case 'success':
+          messageToSend = 'Success'
+          break
+        case 'cancel':
+          messageToSend = '/restart'
+          break
+      }
+    } else if (currentFieldType === 'PAYMENT_VIEW') {
+      switch (optionData.payStatus) {
+        case 'success':
+          messageToSend = 'Success'
           break
         case 'cancel':
           messageToSend = '/restart'

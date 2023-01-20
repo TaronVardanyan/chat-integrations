@@ -1,13 +1,13 @@
 import React, { useEffect, useState, memo } from 'react'
 import { FILES_PATH } from './constants'
-import { ConfirmStepData, MarketStepData, TeamStepData, WidgetConfig } from '../types'
+import { ConfirmStepData, MarketStepData, TeamStepData, WidgetConfig, DepositFinalCallback } from '../types'
 import {
   StyledWidgetWrapper,
   StyledClickBlocker,
   StyledLoadingSkeleton
 } from './styles'
 
-export type SelectCallback = TeamStepData & MarketStepData & ConfirmStepData;
+export type SelectCallback = TeamStepData & MarketStepData & ConfirmStepData & DepositFinalCallback;
 
 type Props = {
   widgetType?: string;

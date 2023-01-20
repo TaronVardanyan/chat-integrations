@@ -15,7 +15,7 @@
     "build": "rollup -c",
     "clean": "rimraf lib my-react-package-*.tgz",
     "watch": "rollup -cw",
-    "publish": "npm publish --access=public"
+    "publish-npm": "npm publish --access=public"
   },
   "keywords": [],
   "license": "MIT",

@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { ifProp } from 'styled-components-helpers'
+import { ifProp, inMobile } from 'styled-components-helpers'
 import { Skeleton } from 'antd'
 
 export const StyledClickBlocker = styled.div`
@@ -51,6 +51,17 @@ export const StyledWidgetWrapper = styled.div<{ $isDisabled?: boolean; $isInWidg
   .internalLoadingBlock {
     position: relative !important;
   }
+  .paymentMethods__gridLayout > div {
+    cursor: ${ifProp('$isDisabled', 'not-allowed', 'pointer')};
+  }
+  .keyboard__container {
+    display: none;
+  }
+  ${inMobile(`
+  .keyboard__container {
+    display: block;
+  }
+  `)}
 `
 
 export const StyledLoadingSkeleton = styled(Skeleton)`
