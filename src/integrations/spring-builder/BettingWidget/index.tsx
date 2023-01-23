@@ -16,7 +16,16 @@ type Props = {
   isInWidget?: boolean;
   widgetConfig?: WidgetConfig;
   widgetKey?: string;
+  swarmUrl?: string;
+  partnerId?: number;
 };
+
+declare global {
+  interface Window {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    partnerConfigs: any;
+  }
+}
 
 function BettingWidget ({
   widgetType,
@@ -24,13 +33,18 @@ function BettingWidget ({
   widgetConfig,
   isDisabled,
   isInWidget,
-  widgetKey
+  widgetKey,
+  swarmUrl,
+  partnerId
 }: Props) {
   const [isLoaded, setIsLoaded] = useState(Boolean(document.getElementById('SP_WIDGET_JS_FILE')))
   const tempConfig: WidgetConfig = { ...widgetConfig }
   if (onSelect) {
     const callbackFnName = `hoorySuccessCallback_${widgetKey}`
     window[callbackFnName] = (data: TeamStepData & MarketStepData & ConfirmStepData) => {
+      // don't call function on disabled widgets
+      if (isDisabled) return
+
       onSelect(data)
       delete window[callbackFnName]
     }
@@ -39,6 +53,13 @@ function BettingWidget ({
   }
 
   useEffect(() => {
+    window.partnerConfigs = {
+      swarmUrl: swarmUrl || 'wss://eu-swarm-ws-re.trexname.com/',
+      defaultOddAccept: ''
+    }
+    window.partnerConfigs.springConfig = {}
+    window.partnerConfigs.springConfig.partnerId = partnerId || 4
+
     if (!isLoaded) {
       const mainScript = document.createElement('script')
       const runTimeScript = document.createElement('script')
