@@ -70,6 +70,8 @@ export type RasaFieldType = {
   field_metadata?: Record<string, any>;
   value: string;
   required: boolean;
+  custom_provider: string;
+  custom_type: string;
 };
 
 export type RasaSockedMessage = {
@@ -81,6 +83,12 @@ export type RasaSockedMessage = {
   attachments?: Attachment[];
   metadata: Record<string, string>;
   field?: RasaFieldType;
+  form?: {
+    id: string;
+    title: string;
+    fields: Record<string, string>;
+    fields_count: number;
+  };
 };
 
 export enum MessageType {

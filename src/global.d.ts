@@ -4,6 +4,7 @@ declare module 'i18next';
 declare module 'react-i18next';
 declare module 'react-router-dom';
 declare module '@stripe/react-stripe-js';
+declare module 'styled-components-helpers';
 
 declare module '*.module.css' {
     const classes: { readonly [key: string]: string }

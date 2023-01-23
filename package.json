@@ -1,6 +1,7 @@
 {
   "name": "@hoory/chat-intergrations",
-  "version": "1.0.2",
+  "version": "1.0.37",
+  "private": false,
   "description": "Hoory custom chat integrations",
   "main": "./lib/cjs/index.js",
   "module": "./lib/esm/index.js",
@@ -14,14 +15,14 @@
     "build": "rollup -c",
     "clean": "rimraf lib my-react-package-*.tgz",
     "watch": "rollup -cw",
-    "publish": "npm publish --access=public"
+    "publish-npm": "yarn build && npm publish --access=public --latest"
   },
   "keywords": [],
   "license": "MIT",
   "peerDependencies": {
-    "antd": "^5.0.0 || ^4.0.0",
     "@sentry/react": "^6.17.1",
     "@stripe/react-stripe-js": "^1.2.0",
+    "antd": "^5.0.0 || ^4.0.0",
     "framer-motion": "^4.1.13",
     "i18next": "^21.6.9",
     "react": "^17.0.2",
